@@ -55,3 +55,10 @@ debug-tools/presentation-tester
 
 .test-data
 cli
+
+node_modules/
+.wrangler/
+dist/
+.dev.vars
+.env
+*.log
