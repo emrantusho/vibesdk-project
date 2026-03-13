@@ -1,15 +1,18 @@
 #!/bin/bash
-# Tell the script where Bun and the new Node are
-export PATH="/usr/local/bin:$HOME/.bun/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH="$HOME/.bun/bin:$PATH"
+nvm use 22
 
-# Go to the project folder
 cd /home/emran/vibesdk
 
-# Clear the old Vite cache to prevent conflicts
-rm -rf node_modules/.vite
+# FIX: Check if dist folder exists, if not, build it
+if [ ! -d "dist" ]; then
+  echo "Dist folder missing. Building project..."
+  bun run build
+fi
 
-# We use --local to keep it off the internet and --persist-to to save data locally
+# Run the dev server
 bun x wrangler dev --local --persist-to .wrangler/state
 
-# Keep the window open so we can see success/errors
 read -p "Process finished. Press enter to close..."
